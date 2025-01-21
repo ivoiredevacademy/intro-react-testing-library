@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { BsTrash3 } from "react-icons/bs";
+import { AiOutlinePlus } from "react-icons/ai";
+import { v4 as uid } from 'uuid';
 import './App.css';
 
 interface Todo {
-  id: number;
+  id: string;
   text: string;
   completed: boolean;
 }
@@ -12,25 +15,29 @@ const App: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
 
  
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.target.value);
   };
 
- 
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (e.key === 'Enter') {
+      addTodo();
+    }
+  }
+
   const addTodo = () => {
     if (inputValue.trim() === '') return;
 
-    const newTodo: Todo = {
-      id: Date.now(),
+    setTodos([...todos, {
+      id: uid(),
       text: inputValue,
       completed: false,
-    };
+    }]);
 
-    setTodos([...todos, newTodo]);
     setInputValue('');
   };
 
-  const toggleTodo = (id: number) => {
+  const toggleTodo = (id: string) => {
     setTodos(
       todos.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -38,13 +45,15 @@ const App: React.FC = () => {
     );
   };
 
-  const removeTodo = (id: number) => {
+  const removeTodo = (id: string) => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
+  const completedTodos = todos.filter(todo => todo.completed).length;
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+      <div className="w-full max-w-lg bg-white rounded-lg shadow-md p-6">
         <h1 className="text-5xl font-bold text-gray-800 text-center mb-4">To-Do App</h1>
 
         <div className="flex gap-2 mb-6">
@@ -54,13 +63,17 @@ const App: React.FC = () => {
             placeholder="What needs to be done?"
             value={inputValue}
             onChange={handleInputChange}
+            onKeyUp={handleKeyUp}
           />
           <button
             onClick={addTodo}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition">
-            Add
+            className="flex items-center bg-blue-100 px-4 py-2 rounded-md hover:bg-blue-200 transition text-blue-500"
+          >
+            <AiOutlinePlus />
+            New task
           </button>
         </div>
+
 
         <ul className="space-y-3">
           {todos.map(todo => (
@@ -70,20 +83,33 @@ const App: React.FC = () => {
                 todo.completed ? 'bg-green-100 border-green-400' : 'bg-gray-50 border-gray-200'
               }`}
             >
-              <span
-                onClick={() => toggleTodo(todo.id)}
-                className={`flex-1 cursor-pointer ${todo.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}
-              >
-                {todo.text}
-              </span>
+              <div className="flex items-center">
+                <input 
+                  type="checkbox" 
+                  checked={todo.completed}
+                  onChange={() => toggleTodo(todo.id)}
+                  id={"checkbox-" + todo.id}
+                  className="mr-2 w-5 h-5 cursor-pointer rounded-full"
+                />
+                <label 
+                  htmlFor={"checkbox-" + todo.id}
+                  className={`flex-1 cursor-pointer ${todo.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}
+                >
+                  {todo.text}
+                </label>
+              </div>
               <button
                 onClick={() => removeTodo(todo.id)}
-                className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">
-                ❌
+                className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 transition">
+                <BsTrash3 />
               </button>
             </li>
           ))}
         </ul>
+
+        <div className="mt-4 flex justify-end">
+          <span className="text-sm text-gray-400">{completedTodos} completed of {todos.length} todos</span>
+        </div>
       </div>
     </div>
   );
