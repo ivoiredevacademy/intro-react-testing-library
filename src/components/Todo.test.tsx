@@ -15,8 +15,8 @@ let todos: Array<Todo> = [];
 
 beforeEach(() => {
   todos = [
-    { id: '1', text: 'Buy groceries', completed: false },
-    { id: '2', text: 'Walk the dog', completed: true },
+    { id: '1', title: 'Buy groceries', completed: false },
+    { id: '2', title: 'Walk the dog', completed: true },
   ]
 })
 
@@ -30,20 +30,18 @@ it('renders the number of completed todos', () => {
 it('renders the list of todos', () => {
   render(<Todos initialState={todos} />);
   
-  const todo1Item = screen.getByTestId('todo-item-1');
-  expect(todo1Item).toBeInstanceOf(HTMLLIElement);
-  expect(todo1Item).toHaveTextContent('Buy groceries');
+  const todo1Item = screen.getByText('Buy groceries');
+  expect(todo1Item).toBeInTheDocument();
 
-  const todo2Item = screen.getByTestId('todo-item-2');
-  expect(todo2Item).toBeInstanceOf(HTMLLIElement);
-  expect(todo2Item).toHaveTextContent('Walk the dog');
+  const todo2Item = screen.getByText('Walk the dog');
+  expect(todo2Item).toBeInTheDocument();
 });
 
 
 it('renders the number of completed todos after changing the state', async () => {
   render(<Todos initialState={todos} />);
 
-  const todo1Checkbox = screen.getByTestId('checkbox-1');
+  const todo1Checkbox = screen.getByRole('checkbox', { name: 'Buy groceries' });
   
   await userEvent.click(todo1Checkbox);
 
@@ -72,5 +70,11 @@ it('adds a new todo with typing "Enter"', async () => {
   await userEvent.type(input, '{enter}');
 
   expect(screen.getAllByRole('listitem')).toHaveLength(3);
+  expect(screen.getByRole('checkbox', { name: /feed the cat/i })).toBeInTheDocument();
+
   expect(screen.getByTestId('summary')).toHaveTextContent('3 todos');
+});
+
+it("can fetch data from an API", async () => {
+
 });

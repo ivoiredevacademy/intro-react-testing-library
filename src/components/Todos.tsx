@@ -1,12 +1,12 @@
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { BsTrash3 } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { v4 as uid } from 'uuid';
 
 export interface Todo {
   id: string;
-  text: string;
+  title: string;
   completed: boolean;
 }
 
@@ -17,6 +17,7 @@ type TodosProps = {
 const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
   const [todos, setTodos] = useState<Todo[]>(initialState ?? []);
   const [inputValue, setInputValue] = useState<string>('');
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setInputValue(e.target.value);
@@ -33,7 +34,7 @@ const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
 
     const newTask = {
       id: uid(),
-      text: inputValue,
+      title: inputValue,
       completed: false,
     };
 
@@ -103,7 +104,7 @@ const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
                   htmlFor={"checkbox-" + todo.id}
                   className={`flex-1 cursor-pointer ${todo.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}
                 >
-                  {todo.text}
+                  {todo.title}
                 </label>
               </div>
               <button
