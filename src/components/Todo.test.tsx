@@ -74,7 +74,3 @@ it('adds a new todo with typing "Enter"', async () => {
 
   expect(screen.getByTestId('summary')).toHaveTextContent('3 todos');
 });
-
-it("can fetch data from an API", async () => {
-
-});

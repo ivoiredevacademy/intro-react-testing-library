@@ -19,8 +19,8 @@ const User: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center justify-center w-full min-h-screen  mx-auto bg-blue-100 overflow-hidden" data-testid="user">
-      <div className="px-10 py-6 shadow-md  rounded-lg bg-white">
+    <div className="" data-testid="user">
+      <div className="px-10 py-6 shadow-md  rounded-lg bg-white w-full">
         <h2 className="text-2xl font-bold text-gray-800">{user?.name}</h2>
         <p className="text-xl text-gray-600">{user?.email}</p>
       </div>

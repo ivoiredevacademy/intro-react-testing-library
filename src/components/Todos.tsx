@@ -57,7 +57,7 @@ const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
   const completedTodos = useMemo(() => todos.filter(todo => todo.completed).length, [todos]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <div className=" flex items-center justify-center p-6">
       <div className="w-full max-w-lg bg-white rounded-lg shadow-md p-6">
         <h1 id="title" className="text-5xl font-bold text-gray-800 text-center mb-4">To-Do App</h1>
 
