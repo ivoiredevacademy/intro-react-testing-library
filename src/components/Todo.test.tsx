@@ -39,6 +39,7 @@ it('renders the list of todos', () => {
   expect(todo2Item).toHaveTextContent('Walk the dog');
 });
 
+
 it('renders the number of completed todos after changing the state', async () => {
   render(<Todos initialState={todos} />);
 
@@ -47,4 +48,29 @@ it('renders the number of completed todos after changing the state', async () =>
   await userEvent.click(todo1Checkbox);
 
   expect(screen.getByTestId('summary')).toHaveTextContent('2 completed');
+});
+
+it('adds a new todo', async () => {
+  render(<Todos initialState={todos} />);
+
+  const input = screen.getByTestId('todo-textinput');
+  const button = screen.getByTestId('todo-submit-button');
+
+  await userEvent.type(input, 'Feed the cat');
+  await userEvent.click(button);
+
+  expect(screen.getAllByRole('listitem')).toHaveLength(3);
+  expect(screen.getByTestId('summary')).toHaveTextContent('3 todos');
+});
+
+it('adds a new todo with typing "Enter"', async () => {
+  render(<Todos initialState={todos} />);
+
+  const input = screen.getByTestId('todo-textinput');
+
+  await userEvent.type(input, 'Feed the cat');
+  await userEvent.type(input, '{enter}');
+
+  expect(screen.getAllByRole('listitem')).toHaveLength(3);
+  expect(screen.getByTestId('summary')).toHaveTextContent('3 todos');
 });

@@ -15,7 +15,6 @@ type TodosProps = {
 }
 
 const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
-  console.log(initialState)
   const [todos, setTodos] = useState<Todo[]>(initialState ?? []);
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -69,10 +68,12 @@ const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
             value={inputValue}
             onChange={handleInputChange}
             onKeyUp={handleKeyUp}
+            data-testid="todo-textinput"
           />
           <button
             onClick={addTodo}
             className="flex items-center bg-blue-100 px-4 py-2 rounded-md hover:bg-blue-200 transition text-blue-500"
+            data-testid="todo-submit-button"
           >
             <AiOutlinePlus />
             New task
