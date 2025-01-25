@@ -87,14 +87,16 @@ const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
               className={`flex justify-between items-center p-4 rounded-md shadow-sm border transition ${
                 todo.completed ? 'bg-green-100 border-green-400' : 'bg-gray-50 border-gray-200'
               }`}
+              data-testid={`todo-item-${todo.id}`}
             >
               <div className="flex items-center">
                 <input 
                   type="checkbox" 
                   checked={todo.completed}
                   onChange={() => toggleTodo(todo.id)}
-                  id={"checkbox-" + todo.id}
                   className="mr-2 w-5 h-5 cursor-pointer rounded-full"
+                  id={"checkbox-" + todo.id}
+                  data-testid={"checkbox-" + todo.id}
                 />
                 <label 
                   htmlFor={"checkbox-" + todo.id}
