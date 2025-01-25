@@ -10,8 +10,13 @@ export interface Todo {
   completed: boolean;
 }
 
-const Todos: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+type TodosProps = {
+  initialState?: Todo[];
+}
+
+const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
+  console.log(initialState)
+  const [todos, setTodos] = useState<Todo[]>(initialState ?? []);
   const [inputValue, setInputValue] = useState<string>('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -108,7 +113,7 @@ const Todos: React.FC = () => {
         </ul>
 
         <div className="mt-4 flex justify-end">
-          <span className="text-sm text-gray-400">{completedTodos} completed of {todos.length} todos</span>
+          <span className="text-sm text-gray-400" data-testid="summary">{completedTodos} completed of {todos.length} todos</span>
         </div>
       </div>
     </div>
