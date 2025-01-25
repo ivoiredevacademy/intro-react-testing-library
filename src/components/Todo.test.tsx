@@ -8,6 +8,7 @@ import Todos, { Todo } from './Todos';
 it('renders the app title', () => {
   render(<Todos />);
   expect(screen.queryByText("To-Do App")).toBeInTheDocument();
+  expect(document.querySelector("#title")).toBeInTheDocument();
 });
 
 let todos: Array<Todo> = [];
@@ -18,7 +19,6 @@ beforeEach(() => {
     { id: '2', text: 'Walk the dog', completed: true },
   ]
 })
-
 
 it('renders the number of completed todos', () => {
   render(<Todos initialState={todos} />);  

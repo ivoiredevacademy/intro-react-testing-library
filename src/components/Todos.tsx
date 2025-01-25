@@ -58,7 +58,7 @@ const Todos: React.FC<TodosProps> = ({ initialState }: TodosProps) => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
       <div className="w-full max-w-lg bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-5xl font-bold text-gray-800 text-center mb-4">To-Do App</h1>
+        <h1 id="title" className="text-5xl font-bold text-gray-800 text-center mb-4">To-Do App</h1>
 
         <div className="flex gap-2 mb-6">
           <input
