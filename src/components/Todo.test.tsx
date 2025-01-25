@@ -5,5 +5,6 @@ import '@testing-library/jest-dom/vitest'
 
 
 it('renders the app title', () => {
-  expect(true).toBe(true);
+  render(<App />);
+  expect(screen.getByText('To-Do App')).toBeInTheDocument();
 });
